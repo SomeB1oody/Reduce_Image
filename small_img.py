@@ -32,6 +32,7 @@ for row in range(row_new):
         average_color = sector.mean(axis=(0,1)).astype(np.uint8)
         img_new[row, col] = average_color
 #show
-cv.namedWindow("small image")
-cv.imshow("small image", img_new)
+cv.namedWindow("Reduced Image")
+cv.imshow("Reduced Image", img_new)
 cv.waitKey(0)
+cv.imwrite("Reduced_Image.jpg", img_new)
