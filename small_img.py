@@ -5,13 +5,13 @@
 import cv2 as cv
 import numpy as np
 #ask for path of image
-print("Please enter image location")
-print("Example: C:\\Wallpaper\\02.png")
+print("Please enter image location\t")
+print("Example: C:\\Wallpaper\\02.png\t")
 path = input("Enter HERE: ")
 img = cv.imread(path, cv.IMREAD_COLOR)
 #Determine if the read was successful
 if img is None:
-    raise ValueError("Could not open image")
+    raise ValueError("Could not open image\t")
 #Setting Variables
 row_number = img.shape[0]
 col_number = img.shape[1]
