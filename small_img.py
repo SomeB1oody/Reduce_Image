@@ -9,26 +9,37 @@ print("Please enter image location\t")
 print("Example: C:\\Wallpaper\\02.png\t")
 path = input("Enter HERE: ")
 img = cv.imread(path, cv.IMREAD_COLOR)
+sector_size_ = input("Please enter the size of a single pixel sector:")
+sector_size = int(sector_size_)
 #Determine if the read was successful
 if img is None:
     raise ValueError("Could not open image\t")
+if sector_size < 1:
+    raise ValueError("\tsector size invalid\tSize is too small.")
+if sector_size > img.shape[0] or sector_size > img.shape[1]:
+    raise ValueError("\tsector size invalid\tSize is too big.")
 #Setting Variables
 row_number = img.shape[0]
 col_number = img.shape[1]
-#If the number of pixels is odd, one row/column is discarded
-if img.shape[0] % 2 != 0: row_number -= 1
-if img.shape[1] % 2 != 0: col_number -= 1
-#Setting Variables
-row_new = row_number // 2
-col_new = col_number // 2
+#Croping Image
+flag1 = True
+flag2 = True
+while flag1 and flag2:
+    if img.shape[0] % sector_size != 0: row_number -= 1
+    else: flag1 = False
 
+    if img.shape[1] % 2 != 0: col_number -= 1
+    else: flag2 = False
+#Setting Variables
+row_new = row_number // sector_size
+col_new = col_number // sector_size
 img_new = np.zeros((row_new, col_new, img.shape[2]), dtype=np.uint8)
 #Reducing the amount of pixels by averaging over a two-by-two sector
 for row in range(row_new):
     for col in range(col_new):
-        symbol_row = row * 2
-        symbol_col = col * 2
-        sector = img[symbol_row:symbol_row + 2, symbol_col:symbol_col + 2]
+        symbol_row = row * sector_size
+        symbol_col = col * sector_size
+        sector = img[symbol_row:symbol_row + sector_size, symbol_col:symbol_col + sector_size]
         average_color = sector.mean(axis=(0,1)).astype(np.uint8)
         img_new[row, col] = average_color
 #show
