@@ -25,10 +25,10 @@ col_number = img.shape[1]
 flag1 = True
 flag2 = True
 while flag1 and flag2:
-    if img.shape[0] % sector_size != 0: row_number -= 1
+    if row_number % sector_size != 0: row_number -= 1
     else: flag1 = False
 
-    if img.shape[1] % 2 != 0: col_number -= 1
+    if col_number % 2 != 0: col_number -= 1
     else: flag2 = False
 #Setting Variables
 row_new = row_number // sector_size
